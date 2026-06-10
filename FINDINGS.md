@@ -15,22 +15,25 @@ The vehicle location endpoint does not enforce ownership boundaries. An authenti
 
 Authenticate as Bob. Request Alice's vehicle location using Alice's vehicle UUID with Bob's token:
 
+```http
 GET /identity/api/v2/vehicle/e723d757-eaca-4830-b7a3-b1cc21a97fe2/location
 Authorization: Bearer <bob_token>
+```
 
 ### Observed Response
 
-HTTP 200 OK
+```json
 {
-"carId": "e723d757-eaca-4830-b7a3-b1cc21a97fe2",
-"vehicleLocation": {
-"id": 4,
-"latitude": "38.206348",
-"longitude": "-84.270172"
-},
-"fullName": "Alice",
-"email": "alice@crapi.local"
+  "carId": "e723d757-eaca-4830-b7a3-b1cc21a97fe2",
+  "vehicleLocation": {
+    "id": 4,
+    "latitude": "38.206348",
+    "longitude": "-84.270172"
+  },
+  "fullName": "Alice",
+  "email": "alice@crapi.local"
 }
+```
 
 ### Expected Behavior
 
@@ -57,17 +60,21 @@ The recent posts endpoint returns `author.email` and `author.vehicleid` for ever
 
 Authenticate as Bob. Request recent posts:
 
+```http
 GET /community/api/v2/community/posts/recent
 Authorization: Bearer <bob_token>
+```
 
 ### Observed Response
 
 Each post object in the `posts` array contains:
 
+```json
 "author": {
-"email": "alice@crapi.local",
-"vehicleid": "e723d757-eaca-4830-b7a3-b1cc21a97fe2"
+  "email": "alice@crapi.local",
+  "vehicleid": "e723d757-eaca-4830-b7a3-b1cc21a97fe2"
 }
+```
 
 ### Expected Behavior
 

@@ -21,10 +21,9 @@ describe('crAPI authorization boundary checks', () => {
     });
   });
 
-  // Validates that unauthenticated requests are rejected.
-  // Finding: crAPI returns 404 instead of 401 for this endpoint without a valid token.
-  // This is itself an authorization behavior worth noting — the endpoint does not exist
-  // from the perspective of an unauthenticated caller.
+  // Validates that unauthenticated requests are rejected with a non-200 status.
+  // Observed behavior: crAPI returns 404 instead of 401 for this endpoint without a valid token.
+  // This test documents non-200 rejection, not ideal API semantics.
   it('An unauthenticated request to GET /identity/api/v2/user/dashboard returns 404', () => {
     cy.request({
       method: 'GET',
@@ -52,8 +51,8 @@ describe('crAPI authorization boundary checks', () => {
     });
   });
 
-  // Validates that malformed tokens are rejected at the authorization boundary.
-  // Finding: crAPI returns 404 rather than 401/403 for malformed tokens on this endpoint.
+  // Validates that malformed tokens are rejected with a non-200 status.
+  // Observed behavior: crAPI may return 404 rather than 401/403 for malformed tokens on this endpoint.
   // Acceptable values documented as 401, 403, or 404 based on observed crAPI behavior.
   it('A request to GET /identity/api/v2/user/dashboard with a malformed token returns 401, 403, or 404', () => {
     cy.request({
