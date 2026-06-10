@@ -4,7 +4,7 @@ Authorization-boundary test suite for [crAPI](https://github.com/OWASP/crAPI) (C
 
 The focus is not whether the UI appears to work — it's whether the application enforces **who can see whose data**. Every test in this suite is designed to answer one question: does this protected resource respect ownership boundaries, or does it return data it shouldn't?
 
-Cypress is used here as the executable test harness: to manage authenticated user contexts, drive browser/API interactions, assert expected authorization behavior, and document reproducible failures.
+Cypress is used here as the executable API test harness: to manage authenticated user contexts, drive API interactions, assert expected authorization behavior, and document reproducible failures.
 
 ---
 
@@ -16,9 +16,9 @@ This suite validates those boundaries systematically across three areas:
 
 | Spec file | What it covers |
 |---|---|
-| `auth.cy.js` | Login, logout, and unauthenticated access attempts — baseline session enforcement |
+| `auth.cy.js` | Login, authenticated access, malformed-token handling, and unauthenticated access attempts — baseline session enforcement |
 | `idor-vehicles.cy.js` | Can user A access user B's vehicle data? Ownership-boundary tests across vehicle endpoints |
-| `idor-community.cy.js` | Ownership-boundary tests for community posts and related endpoints |
+| `community-disclosure.cy.js` | Authorization-boundary behavior on community posts; information disclosure finding |
 
 Initial planned scope: ~15–20 tests across 3 spec files.
 
@@ -75,6 +75,8 @@ The goal is repeatable authorization validation, not broad vulnerability scannin
 
 Setup: follow the [official crAPI Docker instructions](https://github.com/OWASP/crAPI#running-locally-with-docker-compose). Default base URL assumed: `http://localhost:8888`.
 
+> Tested against crAPI `develop` branch via the official Docker Compose setup.
+
 ---
 
 ## Running the tests
@@ -84,10 +86,10 @@ Setup: follow the [official crAPI Docker instructions](https://github.com/OWASP/
 npm install
 
 # Run all specs headlessly
-npx cypress run
+npm test
 
 # Open Cypress Test Runner interactively
-npx cypress open
+npm run open
 ```
 
 ---
@@ -99,7 +101,7 @@ cypress/
   e2e/
     auth.cy.js
     idor-vehicles.cy.js
-    idor-community.cy.js
+    community-disclosure.cy.js
   fixtures/
     users.example.json  # committed template for Alice/Bob credentials
     users.json          # local credentials, gitignored
@@ -134,4 +136,12 @@ Together, both projects target OWASP A01 Broken Access Control from complementar
 
 ## Status
 
-> Work in progress. Tests are being added incrementally. Each spec file will include a findings section once validation against crAPI is complete.
+Initial scope complete. 17 tests across 3 spec files, all passing.
+
+| Spec | Tests | Result |
+|---|---|---|
+| `auth.cy.js` | 5 | ✓ Passing |
+| `idor-vehicles.cy.js` | 6 | ✓ Passing |
+| `community-disclosure.cy.js` | 6 | ✓ Passing |
+
+**Confirmed findings:** one HIGH (BOLA/IDOR on vehicle location endpoint) and one MEDIUM (information disclosure on community posts). See [FINDINGS.md](./FINDINGS.md) for full documentation with reproduction steps.

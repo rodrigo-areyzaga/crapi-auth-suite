@@ -7,8 +7,6 @@
 const ALICE_POST_ID = 'ycm6TWNd8U6hRcMfanmD6d';
 
 const BOB_EMAIL = 'bob@crapi.local';
-const BOB_VEHICLE_ID = 'a07828f3-edcf-4535-a59e-6afda15e91ce';
-const BOB_AUTHOR_ID = 9;
 
 describe('crAPI community disclosure boundary checks', () => {
   // Validates that Alice can access the authenticated recent posts feed.

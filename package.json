@@ -1,14 +1,22 @@
 {
   "name": "crapi-auth-suite",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Cypress API-level authorization-boundary test suite for OWASP crAPI.",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "cypress run",
+    "open": "cypress open"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "keywords": [
+    "cypress",
+    "owasp",
+    "crapi",
+    "bola",
+    "idor",
+    "authorization-testing",
+    "broken-access-control"
+  ],
+  "author": "Rodrigo Areyzaga",
+  "license": "MIT",
   "type": "commonjs",
   "devDependencies": {
     "cypress": "^15.17.0"
