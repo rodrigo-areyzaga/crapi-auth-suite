@@ -1,0 +1,10 @@
+{
+  "alice": {
+    "email": "alice@crapi.local",
+    "password": "YOUR_PASSWORD_HERE"
+  },
+  "bob": {
+    "email": "bob@crapi.local",
+    "password": "YOUR_PASSWORD_HERE"
+  }
+}
